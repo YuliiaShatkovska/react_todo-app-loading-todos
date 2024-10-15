@@ -2,10 +2,8 @@ import { FilterStatus } from '../types/FilterStatus';
 import { Todo } from '../types/Todo';
 
 export const getFilteredTodos = (todos: Todo[], filterStatus: FilterStatus) => {
-  let visibleTodos = [...todos];
-
   if (filterStatus !== FilterStatus.ALL) {
-    visibleTodos = visibleTodos.filter(todo => {
+    return todos.filter(todo => {
       switch (filterStatus) {
         case FilterStatus.ACTIVE:
           return !todo.completed;
@@ -19,5 +17,5 @@ export const getFilteredTodos = (todos: Todo[], filterStatus: FilterStatus) => {
     });
   }
 
-  return visibleTodos;
+  return todos;
 };
