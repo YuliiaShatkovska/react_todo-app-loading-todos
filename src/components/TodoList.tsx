@@ -11,6 +11,34 @@ type Props = {
 export const TodoList: React.FC<Props> = ({ todos }) => {
   return (
     <section className="todoapp__main" data-cy="TodoList">
+      {todos.map(todo => (
+        <div
+          data-cy="Todo"
+          className={cn('todo', { completed: todo.completed })}
+          key={todo.id}
+        >
+          <label className="todo__status-label">
+            <input
+              data-cy="TodoStatus"
+              type="checkbox"
+              className="todo__status"
+              checked={todo.completed}
+            />
+          </label>
+
+          <span data-cy="TodoTitle" className="todo__title">
+            {todo.title}
+          </span>
+          <button type="button" className="todo__remove" data-cy="TodoDelete">
+            ×
+          </button>
+
+          <div data-cy="TodoLoader" className="modal overlay">
+            <div className="modal-background has-background-white-ter" />
+            <div className="loader" />
+          </div>
+        </div>
+      ))}
       {/* This is a completed todo */}
 
       {/* <div data-cy="Todo" className="todo completed">
@@ -40,35 +68,6 @@ export const TodoList: React.FC<Props> = ({ todos }) => {
         </div>
       </div> */}
 
-      {/* This todo is an active todo */}
-      {todos.map(todo => (
-        <div
-          data-cy="Todo"
-          className={cn('todo', { completed: todo.completed })}
-          key={todo.id}
-        >
-          <label className="todo__status-label">
-            <input
-              data-cy="TodoStatus"
-              type="checkbox"
-              className="todo__status"
-              checked={todo.completed}
-            />
-          </label>
-
-          <span data-cy="TodoTitle" className="todo__title">
-            {todo.title}
-          </span>
-          <button type="button" className="todo__remove" data-cy="TodoDelete">
-            ×
-          </button>
-
-          <div data-cy="TodoLoader" className="modal overlay">
-            <div className="modal-background has-background-white-ter" />
-            <div className="loader" />
-          </div>
-        </div>
-      ))}
       {/* <div data-cy="Todo" className="todo">
         <label className="todo__status-label">
           <input

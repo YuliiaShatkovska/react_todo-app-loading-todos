@@ -14,7 +14,7 @@ import { getFilteredTodos } from './utils/getFilteredTodos';
 
 export const App: React.FC = () => {
   const [todos, setTodods] = useState<Todo[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
+
   const [errorMessage, setErrorMessage] = useState(Errors.DEFAULT);
   const [filterStatus, setFilterStatus] = useState(FilterStatus.ALL);
 
@@ -24,15 +24,19 @@ export const App: React.FC = () => {
 
   useEffect(() => {
     setErrorMessage(Errors.DEFAULT);
-    setIsLoading(true);
+
     getTodos()
       .then(setTodods)
-      .catch(() => setErrorMessage(Errors.LOADING_TODOS))
-      .finally(() => setIsLoading(false));
-    setTimeout(() => {
-      setErrorMessage(Errors.DEFAULT);
-    }, 3000);
+      .catch(() => setErrorMessage(Errors.LOADING_TODOS));
   }, []);
+
+  useEffect(() => {
+    if (errorMessage) {
+      setTimeout(() => {
+        setErrorMessage(Errors.DEFAULT);
+      }, 3000);
+    }
+  }, [errorMessage]);
 
   if (!USER_ID) {
     return <UserWarning />;
@@ -47,7 +51,7 @@ export const App: React.FC = () => {
       <div className="todoapp__content">
         <Header todos={todos} />
 
-        {!isLoading && todos.length > 0 && (
+        {todos.length > 0 && (
           <>
             <TodoList todos={filteredTodos} />
 
