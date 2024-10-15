@@ -1,16 +1,26 @@
-import React from 'react';
+import React, { useEffect, Dispatch } from 'react';
 import cn from 'classnames';
 import { Errors } from '../types/Errors';
 
 type Props = {
   errorMessage: Errors;
+  setErrorMessage: Dispatch<React.SetStateAction<Errors>>;
   handleResetErrorMessage: () => void;
 };
 
 export const ErrorNotification: React.FC<Props> = ({
   errorMessage,
+  setErrorMessage,
   handleResetErrorMessage,
 }) => {
+  useEffect(() => {
+    if (errorMessage) {
+      setTimeout(() => {
+        setErrorMessage(Errors.DEFAULT);
+      }, 3000);
+    }
+  }, [errorMessage, setErrorMessage]);
+
   return (
     <div
       data-cy="ErrorNotification"
@@ -18,8 +28,6 @@ export const ErrorNotification: React.FC<Props> = ({
         hidden: !errorMessage,
       })}
     >
-      {/* DON'T use conditional rendering to hide the notification */}
-      {/* Add the 'hidden' class to hide the message smoothly */}
       <button
         data-cy="HideErrorButton"
         type="button"

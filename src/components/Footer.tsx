@@ -24,7 +24,6 @@ export const Footer: React.FC<Props> = ({
         {notCompletedTodos} items left
       </span>
 
-      {/* Active link should have the 'selected' class */}
       <nav className="filter" data-cy="Filter">
         {filters.map(filter => {
           const selectedFilter = filter === filterStatus;
@@ -46,8 +45,6 @@ export const Footer: React.FC<Props> = ({
           );
         })}
       </nav>
-
-      {/* this button should be disabled if there are no completed todos */}
 
       <button
         type="button"

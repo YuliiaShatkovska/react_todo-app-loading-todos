@@ -30,14 +30,6 @@ export const App: React.FC = () => {
       .catch(() => setErrorMessage(Errors.LOADING_TODOS));
   }, []);
 
-  useEffect(() => {
-    if (errorMessage) {
-      setTimeout(() => {
-        setErrorMessage(Errors.DEFAULT);
-      }, 3000);
-    }
-  }, [errorMessage]);
-
   if (!USER_ID) {
     return <UserWarning />;
   }
@@ -66,6 +58,7 @@ export const App: React.FC = () => {
 
       <ErrorNotification
         errorMessage={errorMessage}
+        setErrorMessage={setErrorMessage}
         handleResetErrorMessage={handleResetErrorMessage}
       />
     </div>
